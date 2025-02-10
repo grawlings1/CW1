@@ -1,33 +1,18 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Counter & Image Toggle',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  bool _showFirstImage = true;
 
   void _incrementCounter() {
     setState(() {
       _counter++;
+    });
+  }
+
+  void _toggleImage() {
+    setState(() {
+      _showFirstImage = !_showFirstImage;
     });
   }
 
@@ -53,6 +38,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: _incrementCounter,
               child: Text('Increment'),
+            ),
+            SizedBox(height: 40),
+            _showFirstImage
+                ? Image.asset('assets/image1.jpg')
+                : Image.asset('assets/image2.jpg'),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _toggleImage,
+              child: Text('Toggle Image'),
             ),
           ],
         ),
