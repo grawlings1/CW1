@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   int _counter = 0;
   bool _showFirstImage = true;
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -14,6 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _showFirstImage = !_showFirstImage;
     });
+    _controller.forward(from: 0.0);
   }
 
   @override
@@ -40,9 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Increment'),
             ),
             SizedBox(height: 40),
-            _showFirstImage
-                ? Image.asset('assets/image1.jpg')
-                : Image.asset('assets/image2.jpg'),
+            FadeTransition(
+              opacity: _animation,
+              child: _showFirstImage
+                  ? Image.asset('assets/image1.jpg')
+                  : Image.asset('assets/image2.jpg'),
+            ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _toggleImage,
@@ -52,5 +71,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
