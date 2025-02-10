@@ -1,5 +1,25 @@
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   int _counter = 0;
   bool _showFirstImage = true;
@@ -59,8 +79,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             FadeTransition(
               opacity: _animation,
               child: _showFirstImage
-                  ? Image.asset('assets/image1.jpg')
-                  : Image.asset('assets/image2.jpg'),
+                  ? Image.asset('assets/image1.jpeg', height: 200)
+                  : Image.asset('assets/image2.jpeg', height: 200),
             ),
             SizedBox(height: 20),
             ElevatedButton(
